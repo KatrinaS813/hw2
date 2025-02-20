@@ -2,16 +2,20 @@
 #include <string>
 #include <set>
 #include "util.h"
-
-Book::Book(const std::string category, const std::string name, double price, int qty, const std::string& isbn, const std::string& author) : Product(name, price, qty), isbn_(isbn), author_(author) {}
+#include <iostream>
+Book::Book(const std::string& category, const std::string& name, double price, int qty, std::string& isbn, std::string& author): Product(category,name, price, qty), isbn_(isbn), author_(author) {}
 
 Book::~Book() {}
 
 std::set<std::string> Book::keywords() const {
-  std::set<std::string> words = parseStringToWords(name_); 
-  std::set<std::string> authorWords = parseStringToWords(author_); 
+  std::set<std::string> words = parseStringToWords(convToLower(name_)); 
+  std::set<std::string> authorWords = parseStringToWords(convToLower(author_)); 
   words.insert(authorWords.begin(), authorWords.end()); 
   words.insert(isbn_); 
+  // std::cout<<"word\n";
+  // for(std::string word : words){
+  //   std::cout<<word<<std::endl;
+  // }
   return words; 
 }
 
